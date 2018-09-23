@@ -44,6 +44,7 @@ class FrameAnimation : SurfaceHolder.Callback {
         for (i in 0 until length) {
             resIds[i] = typedArray.getResourceId(i,0)
         }
+        typedArray.recycle()
         mFrameLoader = ResFrameLoader(view.context, resIds, LongArray(resIds.size, { i: Int -> duration }))
         view.holder.addCallback(this)
     }
