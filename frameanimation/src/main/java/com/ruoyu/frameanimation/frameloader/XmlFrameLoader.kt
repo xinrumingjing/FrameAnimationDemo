@@ -33,27 +33,21 @@ class XmlFrameLoader(context: Context, xmlDrawableId:Int) : FrameLoader(context)
         loadFrameDrawables()
     }
 
-    override fun nextFrame(): Frame {
+    override fun frameDuration(index: Int): Long {
+        return mFrameDrawables[mFrameIndex].mDuration
+    }
 
+    override fun loadBitmap(): Bitmap {
         var frameDrawable = mFrameDrawables[mFrameIndex]
-        var bitmap:Bitmap
 
         if (mReuseBitmap != null) {
             mOptions.inBitmap = mReuseBitmap
         }
-        bitmap = BitmapFactory.decodeResource(mContext.resources,frameDrawable.mDrawableId,mOptions)
+        return BitmapFactory.decodeResource(mContext.resources,frameDrawable.mDrawableId,mOptions)
+    }
 
-        if (mNextFrame == null) {
-            mNextFrame = Frame(frameDrawable.mDuration, bitmap)
-        } else {
-            mNextFrame?.mBitmap = bitmap
-            mNextFrame?.mDuration = frameDrawable.mDuration
-        }
-        mReuseBitmap = bitmap
-        ++mFrameIndex
-        mFrameIndex = mFrameIndex%mFrameDrawables.size
-
-        return mNextFrame!!
+    override fun frameSize(): Int {
+        return mFrameDrawables.size
     }
 
     private fun loadFrameDrawables() {

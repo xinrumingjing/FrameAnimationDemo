@@ -1,5 +1,6 @@
 package com.ruoyu.frameanimationdemo
 
+import android.graphics.drawable.AnimationDrawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.ruoyu.frameanimation.FrameAnimation
@@ -18,20 +19,24 @@ class MainActivity : AppCompatActivity() {
 //        assetTest()
 //        resTest()
         xmlTest()
+
     }
 
     fun assetTest() {
         frameAnimation = FrameAnimation(findViewById(R.id.surface_view),"surprise",100)
+        frameAnimation?.setRepeatCount(1)
         frameAnimation?.start()
     }
 
     fun resTest() {
         frameAnimation = FrameAnimation(findViewById(R.id.surface_view),R.array.surprise,100)
+        frameAnimation?.setRepeatCount(1)
         frameAnimation?.start()
     }
 
     fun xmlTest() {
         frameAnimation = FrameAnimation(findViewById(R.id.surface_view),R.drawable.surprise)
+        frameAnimation?.setRepeatCount(1)
         frameAnimation?.start()
     }
 

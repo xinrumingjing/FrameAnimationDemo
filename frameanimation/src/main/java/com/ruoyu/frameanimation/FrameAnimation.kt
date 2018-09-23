@@ -17,12 +17,18 @@ import com.ruoyu.frameanimation.frameloader.XmlFrameLoader
 
 class FrameAnimation : SurfaceHolder.Callback {
 
-    private val mFrameLoader : FrameLoader
+    companion object {
+        val INFINITE = -1
+    }
+
+    private val mFrameLoader: FrameLoader
     private val mView: SurfaceView
-    private var mStarted : Boolean = false
-    private var mCreated : Boolean = false
-    private val mTask : Runnable
-    private val mIoHandler : Handler
+    private var mStarted: Boolean = false
+    private var mCreated: Boolean = false
+    private val mTask: Runnable
+    private val mIoHandler: Handler
+    private var mRepeatCount = INFINITE //-1无限循环
+
 
     init {
 
@@ -36,52 +42,55 @@ class FrameAnimation : SurfaceHolder.Callback {
         }
     }
 
-    constructor(view:SurfaceView, resTypeArray:Int, duration: Long) {
+    constructor(view: SurfaceView, resTypeArray: Int, duration: Long) {
         mView = view
         var typedArray = view.context.resources.obtainTypedArray(resTypeArray)
         var length = typedArray.length()
         var resIds = IntArray(length)
         for (i in 0 until length) {
-            resIds[i] = typedArray.getResourceId(i,0)
+            resIds[i] = typedArray.getResourceId(i, 0)
         }
         typedArray.recycle()
         mFrameLoader = ResFrameLoader(view.context, resIds, LongArray(resIds.size, { i: Int -> duration }))
         view.holder.addCallback(this)
     }
 
-    constructor(view: SurfaceView,resIds:IntArray, duration: Long) {
+    constructor(view: SurfaceView, resIds: IntArray, duration: Long) {
         mView = view
         mFrameLoader = ResFrameLoader(view.context, resIds, LongArray(resIds.size, { i: Int -> duration }))
         view.holder.addCallback(this)
     }
 
-    constructor(view: SurfaceView,resIds: IntArray, durations: LongArray) {
+    constructor(view: SurfaceView, resIds: IntArray, durations: LongArray) {
         mView = view
         mFrameLoader = ResFrameLoader(view.context, resIds, durations)
         view.holder.addCallback(this)
     }
 
-    constructor(view: SurfaceView, assetDir:String, duration: Long) {
+    constructor(view: SurfaceView, assetDir: String, duration: Long) {
         mView = view
         mFrameLoader = AssetFrameLoader(view.context, assetDir, duration)
         view.holder.addCallback(this)
     }
 
-    constructor(view: SurfaceView, xmlDrawableId:Int) {
+    constructor(view: SurfaceView, xmlDrawableId: Int) {
         mView = view
         mFrameLoader = XmlFrameLoader(view.context, xmlDrawableId)
         view.holder.addCallback(this)
     }
 
     fun doDrawFrame() {
+        if (mFrameLoader.animationEnd()) {
+            return
+        }
         var frame = mFrameLoader?.nextFrame()
         var canvas = mView.holder.lockCanvas()
-        if (canvas != null ) {
-            canvas.drawColor(Color.TRANSPARENT,PorterDuff.Mode.CLEAR)
-            canvas.drawBitmap(frame.mBitmap,0F,0F,null)
+        if (canvas != null) {
+            canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
+            canvas.drawBitmap(frame.mBitmap, 0F, 0F, null)
             mView.holder.unlockCanvasAndPost(canvas)
         }
-        mIoHandler.postDelayed(mTask,frame.mDuration)
+        mIoHandler.postDelayed(mTask, frame.mDuration)
     }
 
     fun start() {
@@ -92,6 +101,11 @@ class FrameAnimation : SurfaceHolder.Callback {
     fun stop() {
         mStarted = false
         mIoHandler.removeCallbacks(mTask)
+    }
+
+    fun setRepeatCount(repeatCount: Int) {
+        mRepeatCount = repeatCount
+        mFrameLoader.setRepeatCount(mRepeatCount)
     }
 
     override fun surfaceChanged(holder: SurfaceHolder?, format: Int, width: Int, height: Int) {

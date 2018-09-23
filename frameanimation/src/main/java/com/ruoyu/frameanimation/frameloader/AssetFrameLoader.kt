@@ -21,25 +21,19 @@ class AssetFrameLoader(context: Context, assetDir:String, duration:Long) : Frame
         }
     }
 
-    override fun nextFrame(): Frame {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun frameDuration(index: Int): Long {
+        return mDuration
+    }
 
-        var bitmap:Bitmap
+    override fun loadBitmap(): Bitmap {
 
         if (mReuseBitmap != null) {
             mOptions.inBitmap = mReuseBitmap
         }
-        bitmap = BitmapFactory.decodeStream(mContext.assets.open(mFilePaths[mFrameIndex]),null,mOptions)
+        return BitmapFactory.decodeStream(mContext.assets.open(mFilePaths[mFrameIndex]),null,mOptions)
+    }
 
-        if (mNextFrame == null) {
-            mNextFrame = Frame(mDuration, bitmap)
-        } else {
-            mNextFrame?.mDuration = mDuration
-            mNextFrame?.mBitmap = bitmap
-        }
-
-        mFrameIndex = (++mFrameIndex) % mFilePaths.size
-
-        return mNextFrame!!
+    override fun frameSize(): Int {
+        return mFilePaths.size
     }
 }

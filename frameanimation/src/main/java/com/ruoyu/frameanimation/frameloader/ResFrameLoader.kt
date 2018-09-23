@@ -9,33 +9,30 @@ import com.ruoyu.frameanimation.Frame
  * Created by liuruoyu on 2018/9/22.
  */
 
-class ResFrameLoader(context: Context,resIds: IntArray, durations: LongArray) : FrameLoader(context) {
-    val mResIds : IntArray
-    val mDurations : LongArray
+class ResFrameLoader(context: Context, resIds: IntArray, durations: LongArray) : FrameLoader(context) {
+    val mResIds: IntArray
+    val mDurations: LongArray
 
     init {
         mResIds = resIds
         mDurations = durations
+        if (mResIds.size != mDurations.size) {
+            throw IllegalArgumentException("resource size must equal durations size")
+        }
     }
 
-    override fun nextFrame(): Frame {
-        var duration = mDurations[mFrameIndex]
-        var bitmap:Bitmap
+    override fun frameDuration(index: Int): Long {
+        return mDurations[index]
+    }
 
+    override fun loadBitmap(): Bitmap {
         if (mReuseBitmap != null) {
             mOptions.inBitmap = mReuseBitmap
         }
-        bitmap = BitmapFactory.decodeResource(mContext.resources,mResIds[mFrameIndex],mOptions)
-        if (mNextFrame == null) {
-            mNextFrame = Frame(duration, bitmap)
-        } else {
-            mNextFrame?.mBitmap = bitmap
-            mNextFrame?.mDuration = duration
-        }
+        return BitmapFactory.decodeResource(mContext.resources, mResIds[mFrameIndex], mOptions)
+    }
 
-        mReuseBitmap = bitmap
-        mFrameIndex = ++mFrameIndex % mResIds.size
-
-        return mNextFrame!!
+    override fun frameSize(): Int {
+        return mResIds.size
     }
 }
