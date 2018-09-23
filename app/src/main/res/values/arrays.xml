@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="surprise">
+        <item>@drawable/surprise_00000</item>
+        <item>@drawable/surprise_00001</item>
+        <item>@drawable/surprise_00002</item>
+        <item>@drawable/surprise_00003</item>
+        <item>@drawable/surprise_00004</item>
+        <item>@drawable/surprise_00005</item>
+        <item>@drawable/surprise_00006</item>
+        <item>@drawable/surprise_00007</item>
+        <item>@drawable/surprise_00008</item>
+        <item>@drawable/surprise_00009</item>
+        <item>@drawable/surprise_00010</item>
+        <item>@drawable/surprise_00011</item>
+        <item>@drawable/surprise_00012</item>
+        <item>@drawable/surprise_00013</item>
+        <item>@drawable/surprise_00014</item>
+        <item>@drawable/surprise_00015</item>
+        <item>@drawable/surprise_00016</item>
+        <item>@drawable/surprise_00017</item>
+        <item>@drawable/surprise_00018</item>
+        <item>@drawable/surprise_00019</item>
+        <item>@drawable/surprise_00020</item>
+        <item>@drawable/surprise_00021</item>
+        <item>@drawable/surprise_00022</item>
+        <item>@drawable/surprise_00023</item>
+        <item>@drawable/surprise_00024</item>
+        <item>@drawable/surprise_00025</item>
+        <item>@drawable/surprise_00026</item>
+        <item>@drawable/surprise_00027</item>
+        <item>@drawable/surprise_00028</item>
+        <item>@drawable/surprise_00029</item>
+        <item>@drawable/surprise_00030</item>
+        <item>@drawable/surprise_00031</item>
+        <item>@drawable/surprise_00032</item>
+        <item>@drawable/surprise_00033</item>
+        <item>@drawable/surprise_00034</item>
+        <item>@drawable/surprise_00035</item>
+        <item>@drawable/surprise_00036</item>
+        <item>@drawable/surprise_00037</item>
+        <item>@drawable/surprise_00038</item>
+        <item>@drawable/surprise_00039</item>
+        <item>@drawable/surprise_00040</item>
+        <item>@drawable/surprise_00041</item>
+        <item>@drawable/surprise_00042</item>
+        <item>@drawable/surprise_00043</item>
+        <item>@drawable/surprise_00044</item>
+        <item>@drawable/surprise_00045</item>
+        <item>@drawable/surprise_00046</item>
+        <item>@drawable/surprise_00047</item>
+        <item>@drawable/surprise_00048</item>
+        <item>@drawable/surprise_00049</item>
+        <item>@drawable/surprise_00050</item>
+        <item>@drawable/surprise_00051</item>
+        <item>@drawable/surprise_00052</item>
+        <item>@drawable/surprise_00053</item>
+        <item>@drawable/surprise_00054</item>
+        <item>@drawable/surprise_00055</item>
+        <item>@drawable/surprise_00056</item>
+        <item>@drawable/surprise_00057</item>
+        <item>@drawable/surprise_00058</item>
+        <item>@drawable/surprise_00059</item>
+        <item>@drawable/surprise_00060</item>
+
+    </array>
+</resources>
