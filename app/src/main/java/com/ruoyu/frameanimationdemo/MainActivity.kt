@@ -1,9 +1,12 @@
 package com.ruoyu.frameanimationdemo
 
 import android.graphics.drawable.AnimationDrawable
+import android.nfc.Tag
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.ruoyu.frameanimation.FrameAnimation
+import com.ruoyu.frameanimation.FrameListener
 
 /**
  * https://stackoverflow.com/questions/8692328/causing-outofmemoryerror-in-frame-by-frame-animation-in-android
@@ -12,19 +15,36 @@ import com.ruoyu.frameanimation.FrameAnimation
 class MainActivity : AppCompatActivity() {
 
     var frameAnimation : FrameAnimation? = null
+    val TAG = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-//        assetTest()
+        assetTest()
 //        resTest()
-        xmlTest()
+//        xmlTest()
 
     }
 
     fun assetTest() {
         frameAnimation = FrameAnimation(findViewById(R.id.surface_view),"surprise",100)
         frameAnimation?.setRepeatCount(1)
+        frameAnimation?.mFrameListener = object : FrameListener {
+            override fun onDrawStart() {
+                super.onDrawStart()
+                Log.d(TAG,"onDrawStart")
+            }
+
+            override fun onDrawFrame(index: Int) {
+                super.onDrawFrame(index)
+                Log.d(TAG,"onDrawFrame:" + index)
+            }
+
+            override fun onDrawEnd() {
+                super.onDrawEnd()
+                Log.d(TAG,"onDrawEnd")
+            }
+        }
         frameAnimation?.start()
     }
 

@@ -61,4 +61,9 @@ open abstract class FrameLoader(context: Context) {
     fun animationEnd(): Boolean {
         return mCurrentRepeatCount >= mMaxRepeatCount
     }
+
+    //需在nextframe之前调用
+    fun animationStart(): Boolean {
+        return mCurrentRepeatCount==0 && mFrameIndex==1;
+    }
 }

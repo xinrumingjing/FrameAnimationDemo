@@ -29,6 +29,7 @@ class FrameAnimation : SurfaceHolder.Callback {
     private val mIoHandler: Handler
     private var mRepeatCount = INFINITE //-1无限循环
 
+    var mFrameListener : FrameListener?= null
 
     init {
 
@@ -80,15 +81,25 @@ class FrameAnimation : SurfaceHolder.Callback {
     }
 
     fun doDrawFrame() {
-        if (mFrameLoader.animationEnd()) {
+        if (!mStarted || !mCreated) {
             return
         }
+        if (mFrameLoader.animationEnd()) {
+            mFrameListener?.onDrawEnd()
+            mIoHandler.removeCallbacks(mTask)
+            return
+        }
+        //需要在nextFrame（）之前调用
+        mFrameListener?.onDrawFrame(mFrameLoader.mFrameIndex)
         var frame = mFrameLoader?.nextFrame()
         var canvas = mView.holder.lockCanvas()
         if (canvas != null) {
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
             canvas.drawBitmap(frame.mBitmap, 0F, 0F, null)
             mView.holder.unlockCanvasAndPost(canvas)
+        }
+        if (mFrameLoader.animationStart()) {
+            mFrameListener?.onDrawStart()
         }
         mIoHandler.postDelayed(mTask, frame.mDuration)
     }
